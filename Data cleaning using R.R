@@ -1,10 +1,7 @@
-# ============================================================
-# HEALTH INSURANCE — DATA VISUALIZATION (4 CHARTS)
+# HEALTH INSURANCE — DATA VISUALIZATION
 # Dataset 1: Fraud Detection
 # Dataset 2: Payout Prediction
-# ============================================================
 
-# ── STEP 1: Load Packages ────────────────────────────────────
 required_packages <- c("ggplot2", "dplyr", "readr", "scales", "tidyr")
 
 install_if_missing <- function(pkg) {
@@ -16,7 +13,6 @@ invisible(lapply(required_packages, library, character.only = TRUE))
 cat("✅ Packages loaded\n")
 
 
-# ── STEP 2: Load Both Datasets ───────────────────────────────
 fraud_path  <- "C:/Users/Carol Pillai/Desktop/Research/model/health_insurance_fraud_india.csv"
 payout_path <- "C:/Users/Carol Pillai/Desktop/Research/model/health_insurance_payout_prediction.csv"
 
@@ -30,7 +26,6 @@ cat(sprintf("✅ Fraud dataset:  %d rows, %d columns\n", nrow(fraud),  ncol(frau
 cat(sprintf("✅ Payout dataset: %d rows, %d columns\n", nrow(payout), ncol(payout)))
 
 
-# ── SHARED THEME ─────────────────────────────────────────────
 theme_clean <- theme_minimal(base_size = 13) +
   theme(
     plot.title       = element_text(face = "bold", size = 14),
@@ -40,13 +35,6 @@ theme_clean <- theme_minimal(base_size = 13) +
   )
 
 
-# ============================================================
-# FRAUD DETECTION — 2 CHARTS
-# ============================================================
-
-# ── Chart 1: Fraud Rate by Claim Type ────────────────────────
-# Which claim types are most likely to be fraudulent?
-# One sentence to explain: "Surgery claims have the highest fraud rate."
 fraud <- fraud %>%
   mutate(fraud_label = ifelse(is_fraud == 1, "Fraud", "Legitimate"))
 
@@ -73,10 +61,7 @@ ggsave("chart1_fraud_by_claim_type.png", p1, width = 8, height = 5, dpi = 150)
 cat("✅ Chart 1 done: Fraud Rate by Claim Type\n")
 
 
-# ── Chart 2: Claim Amount — Fraud vs Legitimate ───────────────
-# Fraudulent claims tend to be much higher in value.
-# One sentence: "Fraud claims have a significantly higher median amount."
-p2 <- ggplot(fraud, aes(x = fraud_label,
+
                         y = claim_amount_inr / 1e5,
                         fill = fraud_label)) +
   geom_boxplot(alpha = 0.75, outlier.size = 0.8,
@@ -94,13 +79,7 @@ ggsave("chart2_claim_amount_fraud_vs_legit.png", p2, width = 7, height = 5, dpi 
 cat("✅ Chart 2 done: Claim Amount Fraud vs Legitimate\n")
 
 
-# ============================================================
-# PAYOUT PREDICTION — 2 CHARTS
-# ============================================================
 
-# ── Chart 3: Payout by Claim Type ────────────────────────────
-# Surgery and Emergency cost the most, OPD the least.
-# One sentence: "The model correctly predicts higher payouts for serious claims."
 p3 <- ggplot(payout, aes(x = claim_type,
                          y = approved_payout_inr / 1e5,
                          fill = claim_type)) +
@@ -119,9 +98,7 @@ ggsave("chart3_payout_by_claim_type.png", p3, width = 8, height = 5, dpi = 150)
 cat("✅ Chart 3 done: Payout by Claim Type\n")
 
 
-# ── Chart 4: Average Payout — Smoker & Diabetic Comparison ───
-# Do high-risk patients receive higher payouts?
-# One sentence: "Smokers and diabetics have noticeably higher average payouts."
+
 c4 <- payout %>%
   summarise(
     `Smoker`       = mean(approved_payout_inr[is_smoker   == 1], na.rm = TRUE) / 1e5,
@@ -160,7 +137,6 @@ ggsave("chart4_payout_smoker_diabetic.png", p4, width = 10, height = 5, dpi = 15
 cat("✅ Chart 4 done: Payout by Smoker & Diabetic\n")
 
 
-# ── SUMMARY ──────────────────────────────────────────────────
 cat("\n✅ All 4 charts complete!\n")
 cat("  chart1_fraud_by_claim_type.png        — Fraud Detection\n")
 cat("  chart2_claim_amount_fraud_vs_legit.png — Fraud Detection\n")
