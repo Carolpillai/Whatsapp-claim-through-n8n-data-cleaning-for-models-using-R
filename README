@@ -1,0 +1,47 @@
+# Health Insurance — Data Visualization
+### R Project | Fraud Detection & Payout Prediction
+
+
+## What This Does
+Loads two health insurance datasets and generates **4 charts** to explore fraud patterns and payout behaviour — no model training involved.
+
+## Datasets
+| File | Purpose |
+|------|---------|
+| `health_insurance_fraud_india.csv` | Claims labelled as fraud or legitimate |
+| `health_insurance_payout_prediction.csv` | Approved payout amounts per claim |
+
+## Requirements
+R packages (auto-installed on first run):
+`ggplot2`, `dplyr`, `readr`, `scales`, `tidyr`
+
+## How to Run
+1. Open `visualizations.R` in RStudio
+2. Update the two file paths at the top if needed:
+```r
+fraud_path  <- "C:/Users/.../health_insurance_fraud_india.csv"
+payout_path <- "C:/Users/.../health_insurance_payout_prediction.csv"
+
+3. Run the full script — all 4 charts will display and save as PNGs
+
+## Charts Generated
+
+**Fraud Detection**
+| Chart | What It Shows |
+|-------|--------------|
+| `chart1_fraud_by_claim_type.png` | Fraud rate (%) broken down by claim type — Surgery tends to be highest |
+| `chart2_claim_amount_fraud_vs_legit.png` | Claim amount distribution — fraudulent claims are significantly higher in value |
+
+**Payout Prediction**
+| Chart | What It Shows |
+|-------|--------------|
+| `chart3_payout_by_claim_type.png` | Approved payout spread by claim type — Surgery & Emergency cost the most |
+| `chart4_payout_smoker_diabetic.png` | Average payout for smokers vs non-smokers and diabetics vs non-diabetics |
+
+## Key Findings at a Glance
+- Fraudulent claims have a **higher median claim amount** than legitimate ones
+- **Surgery and Emergency** claim types show both the highest fraud rates and the highest payouts
+- **Smokers and diabetics** receive noticeably higher average payouts due to greater medical complexity
+
+## Output Files
+All charts are saved as `.png` files (150 DPI) in your R working directory.
